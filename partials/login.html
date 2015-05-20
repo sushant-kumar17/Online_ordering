@@ -1,0 +1,20 @@
+
+<div class="login-box">
+	<div class="logo"> 
+		<span class="close_signup"> <i aria-hidden="true" class="icon-cancel-2"></i> </span>	
+		<h3> Login </h3> <hr>
+			<form class="form-signin text-center" role="form">
+				<div class="inputbox padding-lf">
+					<input type="text" class="form-control" placeholder="Email / Phone" name="email" ng-model="login.email" required>
+				</div>
+				<div class="inputbox padding-lf">
+					<input type="password" class="form-control" placeholder="Password" ng-model="login.password" required/>
+				</div>
+				<hr>
+				<div class="padding-lf bg-gray form-sub">
+					<h5 class="forgot-pass"> <a href="forgotpass.html" class="pull-left"> Forgot Password ?</a> </h5> 
+					<button class="btn btn-lg btn-block btn-sign pull-right" type="submit" ng-click="doLogin(login)" data-ng-disabled="loginForm.$invalid">Log in</button>
+				</div>
+			</form>
+	</div> 
+</div>

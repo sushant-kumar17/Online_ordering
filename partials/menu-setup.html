@@ -1,0 +1,85 @@
+<div>
+	<!--
+	<div class="top-head" ng-init="tab = 6">
+		<ul class="nav navbar-nav">
+			<li class="btn-address" ng-class="{ active:isSelected(6) }"><a href ng-click="selectTab(6)"> Sales Tax </a><span class="arrow"></span></li>
+			<li class="btn-location" ng-class="{ active:isSelected(7) }"><a href ng-click="selectTab(7)"> Payments </a> <span class="arrow"></span></li>
+		</ul>
+	</div>  -->
+	<style>
+		.bg-sign { min-height:200px; }
+		.item-categories { padding-top:15px; }
+		.item-categories li {  }
+		.item-categories li a { width:30%; border-bottom:1px solid #afafaf; color:#666; font-weight:bold; font-size:14.5px; background:#fff; }
+		.item-categories li a.active { background:#dfdfdf; }
+		.item-categories .item-info { width:65%; position:absolute; float:right; left:30%; border:1px solid #000; top:15px; background:#fff; z-index:111; min-height:500px; }
+		.item-info li { background:rgb(198, 148, 215); padding:10px 15px; margin:15px 0; width:95%; color:#fff; font-size:15px; font-weight:500; }
+	</style>
+	<div class="col-md-11 col-md-offset-1 bg-sign">
+		<ul class="nav nav-stacked item-categories">
+			<li ng-repeat="category in categories track by category.cat_id">
+				<a href ng-class="{ 'active': isCategoryFilter(category.cat_id) }" ng-click="chooseCategory(category.cat_id)"> {{ category.catName }} </a>
+			</li>
+			<li> 
+			<button ng-click="showAddCategory = !showAddCategory" ng-show="!showAddCategory"> + Add Category </button>
+				<form name="categoryForm" ng-if="showAddCategory">
+					<input type="text" name="catName" ng-model="category.catName" required>
+					<input type="hidden" name="restroID" ng-value="1" ng-model="category.restroID">
+					<button type="submit" ng-click="addCategory(category,'addCategory')" ng-disabled="categoryForm.$invalid"> Add </button>
+				</form>
+			</li>
+			<!-- <div class="item-info" ng-repeat="c in comments"> -->
+				<ul class="item-info">
+					<li ng-repeat="item in menuItems | filter: categoryFilter track by item.item_id" >
+						<span class="pull-left"> {{ item.item_name }} - --- {{ item.price }} --- </span>
+								<ul> 
+									<li ng-repeat="e in item.extras">
+										{{ e.size }} ---- {{ e.price }}
+									</li>
+								</ul>
+								
+								<button class="pull-right" ng-click="removeItem(item.item_id,i.$index)">X</button>
+								<button class="pull-right" ng-click="item.show=!item.show">I</button> <br>
+							<form class="form-group" name="menuItemEditForm" ng-if="item.show">
+								<div class="inputbox inline"> 
+									<div> <input type="text" class="form-control" ng-model="item.item_name" placeholder="Item Name"> </div>
+									<div> <input type="text" class="form-control" ng-model="item.price" placeholder="Item Price"> </div>
+								</div>
+								<div class="inputbox">
+									<textarea rows="3" class="form-control" ng-model="item.description" placeholder="Item Description"></textarea>
+								</div>
+								
+								<button ng-click="item.show=!item.show"> Cancel </button>
+								<button ng-click="editItem($parent.$index,$index,i)"> Update Item </button>
+							</form>
+						</li>
+						<form class="form-group" name="menuItemForm" ng-if="isDisplayForm()">
+								<div class="inputbox inline"> 
+									<div> <input type="text" class="form-control" ng-model="menuItem.item_name" placeholder="Item Name" required> </div>
+									<div> <input type="text" ng-if="checkPr()" class="form-control" ng-model="menuItem.price" placeholder="Item Price" required> </div>
+								</div>
+								<div class="inputbox">
+									<textarea rows="3" class="form-control" ng-model="menuItem.description" placeholder="Item Name" required></textarea>
+									<!--  -->
+								</div>
+								<div ng-repeat="i in NumberOfExtras">
+									<input type="text" ng-model="sizes[$index]" placeholder="Size for eg: Regular / Half"> 
+									--- <input type="text" ng-model="prices[$index]"> <button ng-click="delExtras(i.$index)"> Delete {{ $index }} </button>
+								</div>
+
+								<button ng-click="addExtras()"> + Extras </button>
+								<button ng-click="hideForm()"> Cancel </button>
+								<button ng-click="addItem(categoryFilter.cat_id,menuItem,'addMenuItem')" ng-disabled="menuItemForm.$invalid"> Add Item </button>
+								{{ menuItem }} 
+						</form>
+						<button ng-click="showForm()" ng-hide="isDisplayForm()"> Add Item </button>
+					</ul>
+				</div>
+			<!-- <form name="categoryForm">
+				<input type="text" name="cat_name" ng-model="category.cat_name" required> 
+				<button ng-click="addCategory(category)" ng-disabled="categoryForm.$invalid"> + Add </button>
+			</form> -->
+			
+		</ul> 
+	</div>
+</div>

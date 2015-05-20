@@ -1,0 +1,70 @@
+<div ng-controller="mapAddressController">
+	<div class="map-show">
+		<leaflet center="location" markers="markers" layers="layers" height="530px" width="100%"></leaflet>
+	</div>
+			<div class="top-head">
+				<ul class="nav navbar-nav">
+					<li class="btn-address" ng-class="{ active:isSelected(1) }"><a href ng-click="selectTab(1)"> Address </a><span class="arrow"></span></li>
+					<li class="btn-location" ng-class="{ active:isSelected(2) }"><a href ng-click="selectTab(2)"> Location </a> <span class="arrow"></span></li>
+				</ul>
+			</div>
+			<div class="panel box-content address-detail" ng-show="isSelected(1)">
+				<div class="panel-title">
+					Restaurant Details {{ arr }}
+				</div>
+				<div class="panel-details">
+					<form class="form-signin" role="form" name="detailsForm">
+						  <span class="pull-right detailButton"> 
+						   <div class="inputbox">
+								 <button type="submit" ng-click="putDetails(details,2,'putDetails')" data-ng-disabled="detailsForm.$invalid" ng-class="{disabled: detailsForm.$invalid}" class="btn-next btn-location"> Next </button>
+						  </div>
+						 </span>
+					  <div class="restro-details text-center">
+						<div class="inputbox padding-lf">
+							<span class="icon-form">  <i aria-hidden="true" class="icon-home-2"></i>  </span>
+							<input type="text" class="form-control" name="name" ng-model="details.name" placeholder="Restaurant Name" required>
+						</div>
+						<div class="inputbox padding-lf">
+							<span class="icon-form">  <i aria-hidden="true" class="icon-phone"></i>  </span>
+							<input type="text" class="form-control" name="phoneNo" ng-model="details.phoneNo" placeholder="Restaurant Phone Number" required>
+						</div>
+						<hr>
+						<div class="inputbox padding-lf">
+							<span class="icon-form">  <i aria-hidden="true" class="icon-location"></i>  </span>
+							<select class="form-control" name="country" ng-model="details.country">
+								<option value="India" name="country"> India </option>
+								<option value="United States" name="country"> United States </option>
+								<option value="United Kingdom" name="country"> United Kingdom </option>
+							</select>
+						</div>
+						<div class="inputbox padding-lf inline">
+							<div> <input type="text" class="form-control" name="city" ng-model="details.city" placeholder="City" required="">  </div>
+							<div> <input type="text" class="form-control" name="zipcode" ng-model="details.zipcode" placeholder="Zip Code" required="">  </div>
+						</div>
+						<div class="inputbox padding-lf">
+							<input type="text" class="form-control" id="#res-address" name="address" ng-model="details.address" placeholder="Restaurant Address">
+						</div>
+					  </div>
+					 
+					</form>
+				</div>
+			
+			</div>
+   
+
+			<div class="panel box-content location-detail" ng-show="isSelected(2)">
+				<div class="panel-title"> Please choose your location 
+					<span class="pull-right"> 
+					   <div class="inputbox">
+					   <form name="putLocationDetailsForm">
+							 <input type="hidden" ng-value="{{MarkerLocation}}" id="#latlngData" name="location" ng-model="putLocationDetails.location">
+							 <button type="submit" class="btn-next btn-location" ng-click="putDetails(putLocationDetails,3,'putLocationDetails')"> Next </button>
+						</form>
+					  </div>
+					</span>
+				</div>
+				<div class="panel-details">
+					
+				</div>
+			</div>
+</div> <!-- ngController - mapaddressController --->

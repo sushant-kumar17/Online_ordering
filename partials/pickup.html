@@ -1,0 +1,112 @@
+<div ng-controller="servicesController">
+			<div class="top-head">
+				<ul class="nav navbar-nav">
+					<li class="btn-address" ng-class="{ active:isSelected(3) }"><a href ng-click="selectTab(3)"> Pickup </a><span class="arrow"></span></li>
+					<li class="btn-address" ng-class="{ active:isSelected(4) }"><a href ng-click="selectTab(4)" style="width:130px; font-size:14px;"> Opening Hours </a><span class="arrow"></span></li>
+					<li class="btn-location" ng-class="{ active:isSelected(5) }"><a href ng-click="selectTab(5)"> Delivery </a> <span class="arrow"></span></li>
+				</ul>
+			</div>
+			<div class="panel box-content address-detail" ng-show="isSelected(3)">
+				<div class="panel-title">
+					Pickup Options
+				</div>
+				<div class="panel-details">
+					<form class="form-signin" role="form" name="pickupForm">
+						  <span class="pull-right detailButton"> 
+						   <div class="inputbox">
+								 <button type="submit" ng-click="putDetails(pickup,2,'putDetails')" data-ng-disabled="detailsForm.$invalid" ng-class="{disabled: detailsForm.$invalid}" class="btn-next btn-location"> Next </button>
+						  </div>
+						 </span>
+					  <div class="restro-details">
+						 <div class="setting-ques">
+							<em> Do you offer pick up from your location ? {{pickup.pickupchoice}} </em>
+							<span class="pull-right neg-top">
+								<input type="checkbox" name="pickupchoice" ng-model="pickup.pickupchoice" check-box>
+							</span>
+						 </div>
+						 <div class="setting-ques upto-timing">
+							<em> Stop taking pickup 
+								<span><input type="number" class="form-control inline-input" name="beforeMinutes"></span> 
+							minutes before closing time.
+						 </div>
+					  </div>
+					</form>
+				</div>
+			</div>
+			<div class="panel box-content address-detail" ng-show="isSelected(4)">
+				<div class="panel-title">
+					Opening Hours
+				</div>
+				<div class="panel-details">
+					<form class="form-signin" role="form" name="pickupForm">
+						  <span class="pull-right detailButton"> 
+						   <div class="inputbox">
+								 <button type="submit" ng-click="putDetails(pickup,2,'putDetails')" data-ng-disabled="detailsForm.$invalid" ng-class="{disabled: detailsForm.$invalid}" class="btn-next btn-location"> Next </button>
+						  </div>
+						 </span>
+					  <div class="restro-details">
+						 <div class="setting-ques">
+							<em> Your opening hours </em>
+							<span class="pull-right neg-top">
+								<span style="position:relative;">
+									<input type="text" value="11:00 AM" class="form-control inline-input" name="pickupchoice" ng-model="pickup.pickupchoice"> 
+								</span> -
+								<span style="position:relative;">
+									<input type="text" value="11:00 PM" class="form-control inline-input" name="pickupchoice" ng-model="pickup.pickupchoice">
+								</span>
+							</span>
+						 </div>
+						 <div class="setting-ques">
+								<input type="checkbox" class="inline-input" data-labelauty="SUN" name="pickupchoice"  checked select-days>
+								<input type="checkbox" class="inline-input" data-labelauty="MON" name="pickupchoice"  checked select-days>
+								<input type="checkbox" class="inline-input" data-labelauty="TUE" name="pickupchoice"  checked select-days>
+								<input type="checkbox" class="inline-input" data-labelauty="WED" name="pickupchoice"  checked select-days>
+								<input type="checkbox" class="inline-input" data-labelauty="THU" name="pickupchoice"  checked select-days>
+								<input type="checkbox" class="inline-input" data-labelauty="FRI" name="pickupchoice"  checked select-days>
+								<input type="checkbox" class="inline-input" data-labelauty="SAT" name="pickupchoice"  checked select-days>
+						 </div>
+					  </div>
+					</form>
+				</div>
+			</div>
+			<style>
+			.leaflet-draw-section { display: none; }
+			
+				.post { position:absolute; top:100px; left:100px; }
+				.side-panel { padding:5px; width:250px; position:relative; right:-30px; }
+				.side-panel .panel-title { font-size:15px; font-weight:bold; margin:10px 0; text-align:center; }
+				.zones-layout { padding-top:7px; background:#F7EFFF; margin-bottom:15px; overflow:auto; }
+				.inputbox input { margin-bottom:5px; }
+				.btn-complete { width:100%; position:relative; }
+				.btn-add, .btn-add:hover, .btn-add:focus, .btn-add:active { background:#000; color:#fff; }
+			</style>
+			<div class="map-show" ng-if="isSelected(5)">
+			 <leaflet center="location" markers="markers" controls="controls" layers="layers" geojson="geojson" paths="paths" height="530px" width="100%"></leaflet>
+			 
+			</div>
+			<div class="panel side-panel" ng-show="isSelected(5)">
+				<div class="panel-title"> Delivery Zone </div>
+				<div class="panel-details">
+					<div id="appendZones" ng-if="reloadZone">
+						  <form name="deliveryForm"><div class="zones-layout"><div class="inputbox inline">
+							<input type="radio" data-labelauty="Circle" ng-click="chooseShape('CIRCLE')" name="zone1" value="CIRCLE" select-days>
+							<input type="radio" data-labelauty="Polygon" ng-click="chooseShape('POLYGON')" name="zone1" value="POLYGON" select-days></div>
+							<input type="hidden" ng-value="{{MSG}}" ng-model="delivery.zone1"> 
+							
+							<div class="inputbox">
+								<input type="text" class="form-control" placeholder="Delivery Fee" name="deliveryCharge1" ng-model="delivery.deliveryCharge1">
+								<input type="hidden" name="path1" ng-value="{{pathJSON}}" ng-model="delivery.path1">
+							</div>
+							<div class="inputbox inline">
+								<div> <button class="btn btn-complete" id="cancelDelivery"> Cancel </button> </div>
+								<div> <button class="btn btn-complete btn-success" ng-disabled="delivery.$invalid" ng-click="saveDelivery(delivery,'saveDelivery')"> Save </button> 
+							</div></div></div>
+						  </form>
+			
+					</div>
+					<div class="inputbox">
+							<button class="btn btn-complete btn-add" id="addDeliveryZone" ng-click="addDeliveryZone()">Add Delivery Zone</button>
+					</div>
+				</div>
+			</div>
+</div>

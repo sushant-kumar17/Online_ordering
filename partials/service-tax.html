@@ -1,0 +1,51 @@
+<div ng-controller="servicesController">
+			<div class="top-head" ng-init="tab = 6">
+				<ul class="nav navbar-nav">
+					<li class="btn-address" ng-class="{ active:isSelected(6) }"><a href ng-click="selectTab(6)"> Sales Tax </a><span class="arrow"></span></li>
+					<li class="btn-location" ng-class="{ active:isSelected(7) }"><a href ng-click="selectTab(7)"> Payments </a> <span class="arrow"></span></li>
+				</ul>
+			</div>
+			<div class="panel box-content address-detail" ng-show="isSelected(6)">
+				<div class="panel-title">
+					Service Tax Details
+				</div>
+				<div class="panel-details">
+					<form class="form-signin" role="form" name="servicetaxForm">
+						  <span class="pull-right detailButton"> 
+						   <div class="inputbox">
+								 <button type="submit" ng-click="putDetails(pickup,2,'putDetails')" data-ng-disabled="detailsForm.$invalid" ng-class="{disabled: detailsForm.$invalid}" class="btn-next btn-location"> Next </button>
+						  </div>
+						 </span>
+					  <div class="restro-details">
+						 <div class="setting-ques">
+							<em> Service Tax in percentage </em>
+							<span class="pull-right" style="width:150px;">
+								<span class="pull-right neg-top">
+									<span class="input-group">
+										<span class="input-group-addon">@</span>
+											<input type="text" class="form-control" style="width:70px; height:30px;" name="pickupchoice" ng-model="pickup.pickupchoice">
+										<span class="input-group-addon">%</span>
+									</span>
+								</span>
+							</span>
+						 </div>
+						 <div class="setting-ques upto-timing">
+							<em> Menu Price including taxes </em>
+							<span class="pull-right neg-top">
+								<input type="checkbox" class="form-control" check-box>
+							</span>
+						 </div>
+						 <div class="setting-ques">
+							<select class="form-control">
+								<option value="currency"> Currency </option>
+								<option value="dollar"> Dollar </option>
+								<option value="rupee"> Rupee </option>
+							</select>
+						 </div>
+						 
+					  </div>
+					</form>
+				</div>
+			
+			</div>
+</div>

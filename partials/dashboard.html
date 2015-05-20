@@ -1,0 +1,156 @@
+<script src="https://d2skenm2jauoc1.cloudfront.net/assets/js/jquery-1.9.1.min.js"></script>
+
+<nav class="nav navbar navbar-default nav-head is-hidden" role="navigation">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#"> <span class="icon-place"> <i aria-hidden="true" class="icon-rocket"></i></span> Hudson's Cafe - Cafetaria</a>
+    </div>
+	<ul class="nav navbar-nav head-icon pull-right">
+		<li class="new-order"><a href="#" class="btn-green"> New Orders <span>2</span></a> </li>
+		<li> <a href="#"><span class="icon-place"> <i aria-hidden="true" class="icon-bell"></i></span> </a> </li>
+	</ul>
+   </div>
+</nav>
+<style>
+.container-fluid { padding:0 ; }
+</style>
+<div class=" ">
+	<div class="row">
+		<div class="col-md-3 sidebar is-hidden">
+			<ul class="nav nav-pills nav-stacked">
+				 <li class="active"><a href="#"><span class="icon-place"> <i aria-hidden="true" class="icon-location"></i></span> Location Details </a></li>
+				 <li><a href="services.html"><span class="icon-place"> <i aria-hidden="true" class="icon-history-2"></i></span> Services and Opening Hours </a></li>
+				 <li><a href="#"><span class="icon-place"> <i aria-hidden="true" class="icon-share-2"></i></span> Service Tax Details </a></li>
+				 <li><a href="#"><span cloass="icon-place"> <i aria-hidden="true" class="icon-bell"></i></span> Order Notification </a></li>
+				 <li><a href="#"><span class="icon-place"> <i aria-hidden="true" class="icon-book"></i></span> Set up Menu </a></li>
+				 <li><a href="#"><span class="icon-place"> <i aria-hidden="true" class="icon-upload-4"></i></span> Publish it on </a></li>
+				 <li><a href="#"><span class="icon-place"> <i aria-hidden="true" class="icon-chart"></i></span> Customer Details </a></li>
+				 <li><a href="#"><span class="icon-place"> <i aria-hidden="true" class="icon-gift"></i></span> Loyalty (Coupon Code) </a></li>
+				 <li><a href="#"><span class="icon-place"> <i aria-hidden="true" class="icon-settings"></i></span> Advanced Settings </a></li>
+				 <li></li>
+			</ul>
+		</div>
+		<div class="col-md-9 box-wrapper">
+			<div id="map-canvas"></div>
+			<div class="top-head">
+				<ul class="nav navbar-nav">
+					<li class="active btn-address"><a href="#"> Address </a><span class="arrow"></span></li>
+					<li class="btn-location"><a href="#"> Location </a> <span class="arrow"></span></li>
+				</ul>
+			</div>
+			<div class="panel box-content address-detail">
+				<div class="panel-title">
+					Restaurant Details 
+					<span class="pull-right"> 
+					   <div class="inputbox">
+							 <button type="submit" class="btn-next btn-location"> Next </button>
+					  </div>
+					 </span>
+				</div>
+				<div class="panel-details">
+					<form class="form-signin " role="form">
+					  <div class="restro-details text-center">
+						<div class="inputbox padding-lf">
+							<span class="icon-form">  <i aria-hidden="true" class="icon-home-2"></i>  </span>
+							<input type="text" id="inputEmail" class="form-control" placeholder="Restaurant Name" required>
+						</div>
+						<div class="inputbox padding-lf">
+							<span class="icon-form">  <i aria-hidden="true" class="icon-phone"></i>  </span>
+							<input type="text" id="inputPassword" class="form-control" placeholder="Restaurant Phone Number" required>
+						</div>
+						<hr>
+						<div class="inputbox padding-lf">
+							<span class="icon-form">  <i aria-hidden="true" class="icon-location"></i>  </span>
+							<select class="form-control">
+								<option value="India"> India </option>
+								<option value="India"> United States </option>
+								<option value="India"> United Kingdom </option>
+							</select>
+						</div>
+						<div class="inputbox padding-lf inline">
+							<div> <input type="text" class="form-control" placeholder="City" required="">  </div>
+							<div> <input type="text" class="form-control" placeholder="Zip Code" required="">  </div>
+						</div>
+					  </div>
+					 
+					</form>
+				</div>
+			
+			</div>
+ <script src = "https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+    <script>
+	var geocoder = new google.maps.Geocoder();
+		function geocodePosition(pos){
+			geocoder.geocode({
+				latLng: pos
+			},function(response){
+				if(response && response.length>0){
+					updateAddress(response[0].formatted_address);
+				}
+				else
+					updateAddress("Coudn't find the address in this location. Please Enter the location Manually");
+			});
+		}
+		function updateMarkerPosition(latLng){
+			document.getElementById("#latlngData").value = latLng.lat() + "," + latLng.lng();
+		}
+		function updateAddress(str) {
+			document.getElementById("#res-address").value = str;
+		}
+        function initialize(){
+			var Mylatlng = new google.maps.LatLng(22.49585431,88.34660321);
+			var img = 'assets/img/restro-icon.png';
+            var mapOptions = {
+                center: Mylatlng,
+                zoom: 16,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+            var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+			var marker = new google.maps.Marker({
+				position: Mylatlng,
+				map: map,
+				icon: img,
+				draggable: true,
+				title: "Drag to choose the exact Location"
+			});
+			updateMarkerPosition(Mylatlng);
+			geocodePosition(Mylatlng);
+			
+			google.maps.event.addListener(marker, 'drag', function() {
+				//updateMarkerStatus('Dragging...');
+				updateMarkerPosition(marker.getPosition());
+				geocodePosition(marker.getPosition());
+			  });
+        }
+		
+        google.maps.event.addDomListener(window, 'load', initialize);
+ </script>	
+			<div class="panel box-content location-detail">
+				<div class="panel-title"> Please choose your location 
+					<span class="pull-right"> 
+					   <div class="inputbox">
+							 <button type="submit" class="btn-next btn-location"> Next </button>
+					  </div>
+					</span>
+				</div>
+				<div class="panel-details">
+					<form class="restro-details">
+						<input type="hidden" value="" id="#latlngData">
+						<textarea class="form-control" cols="3" id="#res-address"> 20, Naskar Para Road, Near Pancho Pandav Club, Haridevpur, Kolkata </textarea>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- Use this in time of production  22.4960025,88.3483836
+<link href='http://fonts.googleapis.com/css?family=Nunito' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+--->
